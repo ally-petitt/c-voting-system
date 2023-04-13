@@ -17,7 +17,7 @@ int main() {
 				printf("\nYou entered %c\n", input);
 				break;
 			case '3':
-				printf("exiting...");
+				printf("Exiting...");
 				return 0;
 			default:
 				printf("\nInvalid option\n");
