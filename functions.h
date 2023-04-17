@@ -1,5 +1,7 @@
 #include <string.h>
+#include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 struct currentValidID {
 	int year;
@@ -7,22 +9,64 @@ struct currentValidID {
 	int totalVoters;
 };
 
-struct currentValidID currentValidID; // stores Valid ID user parameters
+typedef struct candidate{
+	int cid;
+	char cname[20];
+	int votes;
+} CANDIDATE;
 
+struct currentValidID currentValidID; // stores Valid ID user parameters
+CANDIDATE candidateArray[20]; //to store information on all candidates
+int numberOfCandidates; //Total number of candidates standing for election
+char studentVotes[200];  //to store information of votes given by each student
+
+//To extract year from userID -- For example, userID:2018btecs00064 year:2018 
 int extractYear(char userID[15])
 {
-	return 1;
-}
-
-int extractRollNo(char userID[15])
-{
-	return 1;
+	int year=0;
+	int num;
+	
+	for (int i=0;i<4;i++){
+		num = userID[i] - 48;
+		year = year + (num * pow(10,3-i));
+	}
+	
+	return year;
 }
 
 int checkBranchCode(char userID[15])
 {
-	return 1;
+	char branchCode[6];
+	for (int i=0; i<5; i++) {
+		branchCode[i] = userID[i+4];
+	}
+	
+	branchCode[5] = '\0';
+	
+	if (strcmp(branchCode, currentValidID.branch) == 0)
+		return 1;
+	else
+		return 0;
+	
 }
+
+
+
+int extractRollNo(char userID[15])
+{
+	int rollno=0;
+	int num;
+	
+	for (int i=9; i<14; i++) {
+		num = userID[i] - 48;
+		rollno = rollno + (num * pow(10, 13-i));
+	}
+	
+	printf("rollno is %d", rollno);
+	return rollno;
+}
+
+
 
 
 int isValid(char userID[15])
@@ -54,6 +98,50 @@ void saveVote(char userID[15], int voteInput)
 	return 0;
 }
 
+int authenticateAdmin() {
+	char username[15], password[6];
+	
+	printf("\nEnter username: ");
+	scanf("%s", username);
+	
+	if ((strcmp(username, "Admin")) != 0)
+		return 0;
+	else
+	{
+		printf("Enter Password: ");
+		scanf(" %s", password);
+		
+		if ((strcmp(password, "admiN")) !=0)
+			return 0;
+		
+		return 1;
+		
+	}
+
+}
+
+
+
+void adminPanel()
+{
+	while(1){
+	
+		if (authenticateAdmin() != 1) {
+			printf("\nWrong Username or Password\n");
+			break;
+		}
+	
+		printf("\n\nLOGGED IN SUCCESSFULLY (Press Enter)");
+		getchar();
+		getchar();
+		
+		// TODO: finish
+	
+	}
+
+}
+
+
 
 void studentPanel()
 {
@@ -61,6 +149,12 @@ void studentPanel()
 	int voteInput;
 	while(1)
 	{	
+	
+	
+		// TODO: remove
+		//checkBranchCode("2018btecs00064");
+		
+		
 		// get user ID from user input
 		printf("\n\n To exit press 0");
 		printf("\n Enter user ID: ");

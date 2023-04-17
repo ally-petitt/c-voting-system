@@ -9,12 +9,13 @@ int main() {
 		
 		switch (input){
 			case '1':
-				printf("\nYou entered 1\n");
+				printf("\nOpening the student panel...\n");
 				studentPanel();
 				break;
 			
 			case '2': 
-				printf("\nYou entered %c\n", input);
+				printf("\nOpening the admin panel...\n");
+				adminPanel();
 				break;
 			case '3':
 				printf("Exiting...");
